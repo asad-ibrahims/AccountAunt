@@ -1,0 +1,324 @@
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.screen-card {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 2rem;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .screen-card {
+    padding: 2rem;
+  }
+}
+
+.nav-link,
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  width: 100%;
+  border-radius: 1rem;
+  padding: 0.875rem 1rem;
+  color: rgb(71 85 105);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: 180ms ease;
+}
+
+.nav-link:hover,
+.mobile-nav-link:hover,
+.nav-link.active,
+.mobile-nav-link.active {
+  background: rgb(2 132 199 / 0.08);
+  color: rgb(3 105 161);
+}
+
+.nav-icon {
+  display: inline-flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.875rem;
+  background: rgb(241 245 249);
+}
+
+.nav-icon svg {
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+.mobile-nav {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.25rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(18px);
+  border-radius: 1.5rem;
+  padding: 0.5rem;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.mobile-nav-link {
+  justify-content: center;
+  padding: 0.85rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.4rem 0.85rem;
+  background: rgb(224 242 254);
+  color: rgb(3 105 161);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.55rem;
+  color: rgb(51 65 85);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.form-input,
+select.form-input,
+textarea.form-input {
+  width: 100%;
+  border: 1px solid rgb(203 213 225);
+  border-radius: 1rem;
+  background: rgb(255 255 255);
+  padding: 0.9rem 1rem;
+  color: rgb(15 23 42);
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.form-input:focus,
+select.form-input:focus,
+textarea.form-input:focus {
+  border-color: rgb(14 165 233);
+  box-shadow: 0 0 0 4px rgb(14 165 233 / 0.12);
+}
+
+.primary-btn,
+.secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  padding: 0.9rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: 180ms ease;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, rgb(2 132 199), rgb(14 165 233));
+  color: white;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(2, 132, 199, 0.28);
+}
+
+.secondary-btn {
+  border: 1px solid rgb(203 213 225);
+  background: white;
+  color: rgb(51 65 85);
+}
+
+.secondary-btn:hover {
+  background: rgb(248 250 252);
+}
+
+.metric-card {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,250,252,1) 100%);
+  padding: 1.2rem;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: rgb(100 116 139);
+}
+
+.metric-value {
+  margin-top: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.metric-trend {
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.action-card {
+  display: flex;
+  min-height: 128px;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 1.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: linear-gradient(135deg, rgba(255,255,255,1), rgba(239,246,255,0.9));
+  padding: 1.35rem;
+  text-align: left;
+  transition: 180ms ease;
+}
+
+.action-card span {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: rgb(15 23 42);
+}
+
+.action-card small {
+  font-size: 0.85rem;
+  color: rgb(100 116 139);
+}
+
+.action-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(14, 165, 233, 0.28);
+  box-shadow: 0 18px 35px rgba(14, 165, 233, 0.12);
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(5px);
+}
+
+.modal.hidden,
+.toast.hidden {
+  display: none;
+}
+
+.modal-panel {
+  width: min(100%, 34rem);
+  border-radius: 2rem;
+  background: white;
+  padding: 1.5rem;
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.22);
+}
+
+.toast {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  z-index: 60;
+  max-width: 26rem;
+  border-radius: 1rem;
+  padding: 1rem 1.15rem;
+  color: white;
+  font-size: 0.92rem;
+  font-weight: 600;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+}
+
+.toast.success { background: rgb(5 150 105); }
+.toast.error { background: rgb(220 38 38); }
+.toast.info { background: rgb(2 132 199); }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.status-paid,
+.status-active,
+.status-admin { background: rgb(220 252 231); color: rgb(21 128 61); }
+.status-pending,
+.status-draft,
+.status-accountant { background: rgb(254 249 195); color: rgb(161 98 7); }
+.status-overdue,
+.status-viewer { background: rgb(254 226 226); color: rgb(185 28 28); }
+
+.list-card {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: white;
+  padding: 1.25rem;
+}
+
+.statement-card {
+  border-radius: 1.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,250,252,1) 100%);
+  padding: 1.5rem;
+}
+
+.statement-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+  padding: 0.8rem 0;
+  font-size: 0.95rem;
+}
+
+.statement-row:last-child {
+  border-bottom: none;
+}
+
+.statement-total {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1rem;
+  background: rgb(226 232 240 / 0.55);
+  padding: 0.9rem 1rem;
+  font-weight: 800;
+}
+
+@media (max-width: 1023px) {
+  .screen-card {
+    border-radius: 1.5rem;
+  }
+}
