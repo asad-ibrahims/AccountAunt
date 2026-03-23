@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LedgerFlow Accounting & Payroll</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#eef9ff',
+                100: '#d9f1ff',
+                500: '#0ea5e9',
+                600: '#0284c7',
+                700: '#0369a1',
+                900: '#082f49'
+              },
+              ink: '#0f172a',
+              surface: '#f8fafc'
+            },
+            boxShadow: {
+              soft: '0 20px 45px rgba(15, 23, 42, 0.08)'
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-slate-100 text-slate-900 antialiased">
+    <div class="min-h-screen lg:flex">
+      <aside class="hidden lg:flex lg:w-72 lg:flex-col border-r border-slate-200 bg-white/90 backdrop-blur-xl">
+        <div class="flex items-center gap-3 border-b border-slate-200 px-6 py-5">
+          <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600 text-white shadow-soft">
+            <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M4 19.5V5.5A1.5 1.5 0 0 1 5.5 4H18" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8 8h10a2 2 0 0 1 2 2v8.5a1.5 1.5 0 0 1-1.5 1.5H8a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2Z" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9.5 13h7M9.5 16h4" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-lg font-semibold tracking-tight">LedgerFlow</p>
+            <p class="text-sm text-slate-500">Accounting & Payroll</p>
+          </div>
+        </div>
+
+        <nav class="flex-1 space-y-2 px-4 py-6">
+          <button class="nav-link active" data-screen="screen-dashboard" onclick="navigateTo('screen-dashboard')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 13h8V3H3v10Zm10 8h8V11h-8v10ZM3 21h8v-6H3v6Zm10-10h8V3h-8v8Z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Dashboard
+          </button>
+          <button class="nav-link" data-screen="screen-accounts" onclick="navigateTo('screen-accounts')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6.5h16M6 3.5h12A2.5 2.5 0 0 1 20.5 6v12A2.5 2.5 0 0 1 18 20.5H6A2.5 2.5 0 0 1 3.5 18V6A2.5 2.5 0 0 1 6 3.5Z"/><path d="M8 10h8M8 14h8" stroke-linecap="round"/></svg></span>
+            Accounts
+          </button>
+          <button class="nav-link" data-screen="screen-journal" onclick="navigateTo('screen-journal')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11A2.5 2.5 0 0 1 6.5 4Z"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/></svg></span>
+            Journal
+          </button>
+          <button class="nav-link" data-screen="screen-invoices" onclick="navigateTo('screen-invoices')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3.5h8l4 4V20.5H7A2.5 2.5 0 0 1 4.5 18V6A2.5 2.5 0 0 1 7 3.5Z"/><path d="M15 3.5V8h4M8 12h8M8 16h8" stroke-linecap="round"/></svg></span>
+            Invoices
+          </button>
+          <button class="nav-link" data-screen="screen-expenses" onclick="navigateTo('screen-expenses')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5.5h14v13H5z"/><path d="M8 9h8M8 13h8M8 17h5" stroke-linecap="round"/></svg></span>
+            Expenses
+          </button>
+          <button class="nav-link" data-screen="screen-reports" onclick="navigateTo('screen-reports')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 19.5h14"/><path d="M8 16V9M12 16V5M16 16v-3" stroke-linecap="round"/></svg></span>
+            Reports
+          </button>
+          <button class="nav-link" data-screen="screen-payroll" onclick="navigateTo('screen-payroll')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M4 20a8 8 0 0 1 16 0" stroke-linecap="round"/></svg></span>
+            Payroll
+          </button>
+          <button class="nav-link" data-screen="screen-settings-hub" onclick="navigateTo('screen-settings-hub')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .4 1.7 1.7 0 0 0-.5 1.23V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-.5-1.23 1.7 1.7 0 0 0-1-.4 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.4-1 1.7 1.7 0 0 0-1.23-.5H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.23-.5 1.7 1.7 0 0 0 .4-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6c.37 0 .72-.14 1-.4.32-.31.5-.75.5-1.23V3a2 2 0 1 1 4 0v.09c0 .48.18.92.5 1.23.28.26.63.4 1 .4a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c0 .37.14.72.4 1 .31.32.75.5 1.23.5H21a2 2 0 1 1 0 4h-.09c-.48 0-.92.18-1.23.5-.26.28-.4.63-.4 1Z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Settings
+          </button>
+          <button class="nav-link" data-screen="screen-billing" onclick="navigateTo('screen-billing')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7.5h16M4 12h16M4 16.5h10" stroke-linecap="round"/><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/></svg></span>
+            Billing
+          </button>
+          <button class="nav-link" data-screen="screen-activation" onclick="navigateTo('screen-activation')">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 11V8a4 4 0 1 1 8 0v3"/><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M12 15v2" stroke-linecap="round"/></svg></span>
+            Activation
+          </button>
+        </nav>
+
+        <div class="border-t border-slate-200 px-5 py-5 text-sm text-slate-500">
+          <div class="rounded-2xl bg-slate-50 p-4">
+            <p class="font-semibold text-slate-700">System status</p>
+            <p id="supabase-status" class="mt-1 text-xs text-emerald-600">Supabase ready</p>
+            <p class="mt-3 text-xs">Local UI routing remains available if network services fail.</p>
+          </div>
+        </div>
+      </aside>
+
+      <div class="flex min-h-screen flex-1 flex-col">
+        <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-xl">
+          <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+            <div>
+              <p class="text-xs font-medium uppercase tracking-[0.25em] text-brand-600">LedgerFlow workspace</p>
+              <h1 class="text-2xl font-semibold tracking-tight">Finance operations in one secure dashboard</h1>
+            </div>
+            <div class="flex items-center gap-3">
+              <button class="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50" onclick="openModal('modal-activation')">Activate Pro</button>
+              <button class="rounded-2xl bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700" onclick="navigateTo('screen-billing')">Manage plan</button>
+            </div>
+          </div>
+        </header>
+
+        <main class="mx-auto w-full max-w-7xl flex-1 px-4 pb-28 pt-6 sm:px-6 lg:px-8 lg:pb-10">
+          <section id="screen-login" class="app-screen screen-card max-w-xl">
+            <div class="mb-8 text-center">
+              <span class="pill">Welcome back</span>
+              <h2 class="mt-4 text-3xl font-semibold tracking-tight">Sign in to LedgerFlow</h2>
+              <p class="mt-2 text-slate-500">Access accounting, payroll, invoices, and financial statements from a single workspace.</p>
+            </div>
+            <form id="login-form" class="space-y-5">
+              <div>
+                <label class="form-label">Email</label>
+                <input class="form-input" type="email" name="email" required placeholder="you@company.com" />
+              </div>
+              <div>
+                <label class="form-label">Password</label>
+                <input class="form-input" type="password" name="password" required placeholder="••••••••" />
+              </div>
+              <button class="primary-btn w-full" type="submit">Sign In</button>
+            </form>
+            <p class="mt-6 text-center text-sm text-slate-500">Need an account? <button class="font-semibold text-brand-600" onclick="navigateTo('screen-signup')">Create one</button></p>
+          </section>
+
+          <section id="screen-signup" class="app-screen screen-card hidden max-w-xl">
+            <div class="mb-8 text-center">
+              <span class="pill">Get started</span>
+              <h2 class="mt-4 text-3xl font-semibold tracking-tight">Create your company workspace</h2>
+              <p class="mt-2 text-slate-500">Set up your business profile and unlock invoicing, payroll, and reporting in minutes.</p>
+            </div>
+            <form id="signup-form" class="grid gap-5 md:grid-cols-2">
+              <div class="md:col-span-2">
+                <label class="form-label">Business name</label>
+                <input class="form-input" type="text" name="businessName" required placeholder="LedgerFlow Holdings" />
+              </div>
+              <div>
+                <label class="form-label">Owner full name</label>
+                <input class="form-input" type="text" name="fullName" required placeholder="Alex Morgan" />
+              </div>
+              <div>
+                <label class="form-label">Email</label>
+                <input class="form-input" type="email" name="email" required placeholder="alex@ledgerflow.io" />
+              </div>
+              <div>
+                <label class="form-label">Password</label>
+                <input class="form-input" type="password" name="password" required placeholder="Create a strong password" />
+              </div>
+              <div>
+                <label class="form-label">Phone</label>
+                <input class="form-input" type="tel" name="phone" placeholder="+1 (555) 234-9876" />
+              </div>
+              <button class="primary-btn md:col-span-2" type="submit">Create Workspace</button>
+            </form>
+            <p class="mt-6 text-center text-sm text-slate-500">Already registered? <button class="font-semibold text-brand-600" onclick="navigateTo('screen-login')">Sign in</button></p>
+          </section>
+
+          <section id="screen-onboarding" class="app-screen hidden">
+            <div class="screen-card">
+              <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <span class="pill">Onboarding</span>
+                  <h2 class="mt-4 text-3xl font-semibold tracking-tight">Set up your accounting preferences</h2>
+                  <p class="mt-2 max-w-2xl text-slate-500">Capture the essentials for your business identity, financial year, and payroll defaults before entering the dashboard.</p>
+                </div>
+                <div class="rounded-2xl bg-brand-50 px-4 py-3 text-sm text-brand-700">Step 2 of 2</div>
+              </div>
+              <form id="onboarding-form" class="mt-8 grid gap-5 lg:grid-cols-2">
+                <div>
+                  <label class="form-label">Business legal name</label>
+                  <input class="form-input" type="text" name="legalName" required />
+                </div>
+                <div>
+                  <label class="form-label">Trading name</label>
+                  <input class="form-input" type="text" name="tradingName" />
+                </div>
+                <div>
+                  <label class="form-label">Business address</label>
+                  <input class="form-input" type="text" name="address" required />
+                </div>
+                <div>
+                  <label class="form-label">Primary currency</label>
+                  <select class="form-input" name="currency">
+                    <option>USD</option>
+                    <option>EUR</option>
+                    <option>GBP</option>
+                    <option>NGN</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label">Financial year start</label>
+                  <input class="form-input" type="month" name="financialYear" />
+                </div>
+                <div>
+                  <label class="form-label">Payroll frequency</label>
+                  <select class="form-input" name="payrollFrequency">
+                    <option>Monthly</option>
+                    <option>Bi-weekly</option>
+                    <option>Weekly</option>
+                  </select>
+                </div>
+                <div class="lg:col-span-2">
+                  <label class="form-label">Tax registration number</label>
+                  <input class="form-input" type="text" name="taxId" placeholder="Optional" />
+                </div>
+                <button class="primary-btn lg:col-span-2" type="submit">Finish Setup</button>
+              </form>
+            </div>
+          </section>
+
+          <section id="screen-dashboard" class="app-screen hidden space-y-6">
+            <div class="grid gap-6 xl:grid-cols-[1.5fr_1fr]">
+              <div class="screen-card">
+                <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <span class="pill">Overview</span>
+                    <h2 class="mt-3 text-3xl font-semibold tracking-tight">Good afternoon, finance team</h2>
+                    <p class="mt-2 text-slate-500">Monitor performance, cash position, receivables, expenses, and payroll obligations at a glance.</p>
+                  </div>
+                  <div class="flex gap-3">
+                    <button class="secondary-btn" onclick="quickAction('invoice')">New Invoice</button>
+                    <button class="secondary-btn" onclick="quickAction('expense')">Record Expense</button>
+                    <button class="primary-btn" onclick="quickAction('journal')">Post Journal</button>
+                  </div>
+                </div>
+                <div class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                  <div class="metric-card"><p class="metric-label">Cash Balance</p><p id="metric-cash" class="metric-value">$82,400</p><p class="metric-trend text-emerald-600">+12.4% vs last month</p></div>
+                  <div class="metric-card"><p class="metric-label">Monthly Revenue</p><p id="metric-revenue" class="metric-value">$48,200</p><p class="metric-trend text-emerald-600">+8 invoices pending</p></div>
+                  <div class="metric-card"><p class="metric-label">Operating Expenses</p><p id="metric-expenses" class="metric-value">$19,350</p><p class="metric-trend text-amber-600">Utilities up 4.1%</p></div>
+                  <div class="metric-card"><p class="metric-label">Payroll Due</p><p id="metric-payroll" class="metric-value">$24,900</p><p class="metric-trend text-sky-600">Run date: Mar 28</p></div>
+                </div>
+                <div class="mt-8 rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                  <div class="mb-4 flex items-center justify-between">
+                    <div>
+                      <h3 class="text-lg font-semibold">Performance trend</h3>
+                      <p class="text-sm text-slate-500">Revenue, expenses, and net income</p>
+                    </div>
+                    <button class="secondary-btn" onclick="exportDashboardPdf()">Export PDF</button>
+                  </div>
+                  <div class="h-80"><canvas id="dashboardChart"></canvas></div>
+                </div>
+              </div>
+              <div class="space-y-6">
+                <div class="screen-card">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold">Tasks & reminders</h3>
+                    <span class="pill">Today</span>
+                  </div>
+                  <div id="task-list" class="mt-5 space-y-3"></div>
+                </div>
+                <div class="screen-card">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold">Recent activity</h3>
+                    <button class="text-sm font-medium text-brand-600" onclick="seedDemoData()">Refresh demo</button>
+                  </div>
+                  <div id="activity-feed" class="mt-5 space-y-4"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="screen-accounts" class="app-screen hidden space-y-6">
+            <div class="screen-card">
+              <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Chart of Accounts</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Manage every account category</h2>
+                </div>
+                <button class="primary-btn" onclick="openModal('modal-account')">Add Account</button>
+              </div>
+              <div id="accounts-grid" class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+            </div>
+          </section>
+
+          <section id="screen-ledger" class="app-screen hidden space-y-6">
+            <div class="screen-card">
+              <button class="secondary-btn" onclick="navigateTo('screen-accounts')">← Back to Accounts</button>
+              <div class="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Account Ledger</span>
+                  <h2 id="ledger-title" class="mt-3 text-3xl font-semibold tracking-tight">Cash on Hand</h2>
+                  <p id="ledger-meta" class="mt-2 text-slate-500">Detailed debits and credits for the selected account.</p>
+                </div>
+                <div class="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">Running balance: <span id="ledger-balance" class="font-semibold text-slate-900">$0.00</span></div>
+              </div>
+              <div class="mt-8 overflow-hidden rounded-3xl border border-slate-200">
+                <table class="min-w-full divide-y divide-slate-200 bg-white text-sm">
+                  <thead class="bg-slate-50">
+                    <tr>
+                      <th class="px-4 py-3 text-left font-semibold text-slate-600">Date</th>
+                      <th class="px-4 py-3 text-left font-semibold text-slate-600">Description</th>
+                      <th class="px-4 py-3 text-right font-semibold text-slate-600">Debit</th>
+                      <th class="px-4 py-3 text-right font-semibold text-slate-600">Credit</th>
+                      <th class="px-4 py-3 text-right font-semibold text-slate-600">Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ledger-table" class="divide-y divide-slate-100"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section id="screen-journal" class="app-screen hidden">
+            <div class="screen-card">
+              <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <span class="pill">Journal Entry</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Post double-entry transactions</h2>
+                </div>
+                <div class="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">Balanced total: <span id="journal-balance-status" class="font-semibold text-emerald-600">Ready</span></div>
+              </div>
+              <form id="journal-form" class="mt-8 space-y-5">
+                <div class="grid gap-5 md:grid-cols-3">
+                  <div><label class="form-label">Date</label><input class="form-input" name="date" type="date" required /></div>
+                  <div><label class="form-label">Reference</label><input class="form-input" name="reference" type="text" required placeholder="JE-1008" /></div>
+                  <div><label class="form-label">Memo</label><input class="form-input" name="memo" type="text" required placeholder="Accrual entry" /></div>
+                </div>
+                <div class="overflow-hidden rounded-3xl border border-slate-200">
+                  <table class="min-w-full divide-y divide-slate-200 bg-white text-sm">
+                    <thead class="bg-slate-50">
+                      <tr>
+                        <th class="px-4 py-3 text-left">Account</th>
+                        <th class="px-4 py-3 text-left">Description</th>
+                        <th class="px-4 py-3 text-right">Debit</th>
+                        <th class="px-4 py-3 text-right">Credit</th>
+                      </tr>
+                    </thead>
+                    <tbody id="journal-lines"></tbody>
+                  </table>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                  <button class="secondary-btn" type="button" onclick="addJournalLine()">Add Line</button>
+                  <button class="primary-btn" type="submit">Post Journal</button>
+                </div>
+              </form>
+            </div>
+          </section>
+
+          <section id="screen-invoices" class="app-screen hidden space-y-6">
+            <div class="screen-card">
+              <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Accounts Receivable</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Invoice operations</h2>
+                </div>
+                <button class="primary-btn" onclick="openModal('modal-invoice')">Create Invoice</button>
+              </div>
+              <div id="invoice-list" class="mt-8 grid gap-4"></div>
+            </div>
+          </section>
+
+          <section id="screen-expenses" class="app-screen hidden space-y-6">
+            <div class="screen-card">
+              <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Accounts Payable</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Expense tracking</h2>
+                </div>
+                <button class="primary-btn" onclick="openModal('modal-expense')">Record Expense</button>
+              </div>
+              <div id="expense-list" class="mt-8 grid gap-4"></div>
+            </div>
+          </section>
+
+          <section id="screen-reports" class="app-screen hidden space-y-6">
+            <div class="screen-card">
+              <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Reports Hub</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Financial reporting center</h2>
+                  <p class="mt-2 text-slate-500">Open statutory reports, management summaries, and financial statements.</p>
+                </div>
+              </div>
+              <div class="mt-8 grid gap-4 lg:grid-cols-4">
+                <button class="action-card" onclick="navigateTo('screen-income-statement')"><span>Income Statement</span><small>Profit & Loss</small></button>
+                <button class="action-card" onclick="navigateTo('screen-balance-sheet')"><span>Balance Sheet</span><small>Assets, liabilities, equity</small></button>
+                <button class="action-card" onclick="navigateTo('screen-cash-flow')"><span>Cash Flow</span><small>Operating, investing, financing</small></button>
+                <button class="action-card" onclick="exportTrialBalancePdf()"><span>Trial Balance</span><small>Export snapshot</small></button>
+              </div>
+              <div class="mt-8 overflow-hidden rounded-3xl border border-slate-200">
+                <table class="min-w-full divide-y divide-slate-200 bg-white text-sm">
+                  <thead class="bg-slate-50">
+                    <tr>
+                      <th class="px-4 py-3 text-left">Account</th>
+                      <th class="px-4 py-3 text-left">Type</th>
+                      <th class="px-4 py-3 text-right">Debit</th>
+                      <th class="px-4 py-3 text-right">Credit</th>
+                    </tr>
+                  </thead>
+                  <tbody id="trial-balance-table"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section id="screen-income-statement" class="app-screen hidden">
+            <div class="screen-card">
+              <button class="secondary-btn" onclick="navigateTo('screen-reports')">← Back to Reports</button>
+              <div class="mt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Financial Statements</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Income Statement</h2>
+                </div>
+                <button class="primary-btn" onclick="exportStatementPdf('income')">Export PDF</button>
+              </div>
+              <div id="income-statement-content" class="mt-8 grid gap-6 lg:grid-cols-2"></div>
+            </div>
+          </section>
+
+          <section id="screen-balance-sheet" class="app-screen hidden">
+            <div class="screen-card">
+              <button class="secondary-btn" onclick="navigateTo('screen-reports')">← Back to Reports</button>
+              <div class="mt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Financial Statements</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Balance Sheet</h2>
+                </div>
+                <button class="primary-btn" onclick="exportStatementPdf('balance')">Export PDF</button>
+              </div>
+              <div id="balance-sheet-content" class="mt-8 grid gap-6 lg:grid-cols-2"></div>
+            </div>
+          </section>
+
+          <section id="screen-cash-flow" class="app-screen hidden">
+            <div class="screen-card">
+              <button class="secondary-btn" onclick="navigateTo('screen-reports')">← Back to Reports</button>
+              <div class="mt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Financial Statements</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Cash Flow Statement</h2>
+                </div>
+                <button class="primary-btn" onclick="exportStatementPdf('cashflow')">Export PDF</button>
+              </div>
+              <div id="cash-flow-content" class="mt-8 grid gap-6 lg:grid-cols-3"></div>
+            </div>
+          </section>
+
+          <section id="screen-payroll" class="app-screen hidden space-y-6">
+            <div class="screen-card">
+              <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Payroll Center</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Employee payroll operations</h2>
+                </div>
+                <button class="primary-btn" onclick="navigateTo('screen-run-payroll')">Run Payroll</button>
+              </div>
+              <div id="payroll-summary" class="mt-8 grid gap-4 md:grid-cols-3"></div>
+              <div class="mt-8 grid gap-4" id="employee-list"></div>
+            </div>
+          </section>
+
+          <section id="screen-employee-profile" class="app-screen hidden">
+            <div class="screen-card">
+              <button class="secondary-btn" onclick="navigateTo('screen-payroll')">← Back to Payroll</button>
+              <div id="employee-profile-content" class="mt-6"></div>
+            </div>
+          </section>
+
+          <section id="screen-run-payroll" class="app-screen hidden">
+            <div class="screen-card">
+              <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Payroll Wizard</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Run payroll in 3 steps</h2>
+                </div>
+                <button class="secondary-btn" onclick="navigateTo('screen-payroll')">Cancel</button>
+              </div>
+              <div class="mt-8 grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+                <div class="space-y-3" id="payroll-steps"></div>
+                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6" id="payroll-step-content"></div>
+              </div>
+              <div class="mt-6 flex gap-3">
+                <button class="secondary-btn" onclick="changePayrollStep(-1)">Back</button>
+                <button class="primary-btn" onclick="changePayrollStep(1)">Next</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="screen-settings-hub" class="app-screen hidden space-y-6">
+            <div class="screen-card">
+              <div>
+                <span class="pill">Settings</span>
+                <h2 class="mt-3 text-3xl font-semibold tracking-tight">Workspace administration</h2>
+                <p class="mt-2 text-slate-500">Configure company identity, permissions, billing, and product activation.</p>
+              </div>
+              <div class="mt-8 grid gap-4 lg:grid-cols-4">
+                <button class="action-card" onclick="navigateTo('screen-company-settings')"><span>Company Settings</span><small>Business profile and fiscal settings</small></button>
+                <button class="action-card" onclick="navigateTo('screen-user-roles')"><span>User Roles</span><small>Invite users and control access</small></button>
+                <button class="action-card" onclick="navigateTo('screen-billing')"><span>Billing</span><small>Plans and subscription</small></button>
+                <button class="action-card" onclick="navigateTo('screen-activation')"><span>Activation</span><small>Offline license unlock</small></button>
+              </div>
+            </div>
+          </section>
+
+          <section id="screen-company-settings" class="app-screen hidden">
+            <div class="screen-card">
+              <button class="secondary-btn" onclick="navigateTo('screen-settings-hub')">← Back to Settings</button>
+              <div class="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Company</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Company Settings</h2>
+                </div>
+              </div>
+              <form id="company-settings-form" class="mt-8 grid gap-5 lg:grid-cols-2">
+                <div><label class="form-label">Business Name</label><input class="form-input" name="businessName" type="text" /></div>
+                <div><label class="form-label">Logo URL</label><input class="form-input" name="logoUrl" type="url" placeholder="https://..." /></div>
+                <div class="lg:col-span-2"><label class="form-label">Address</label><input class="form-input" name="address" type="text" /></div>
+                <div><label class="form-label">Financial Year</label><input class="form-input" name="financialYear" type="month" /></div>
+                <div><label class="form-label">Currency</label><select class="form-input" name="currency"><option>USD</option><option>EUR</option><option>GBP</option><option>NGN</option></select></div>
+                <button class="primary-btn lg:col-span-2" type="submit">Save Company Settings</button>
+              </form>
+            </div>
+          </section>
+
+          <section id="screen-user-roles" class="app-screen hidden">
+            <div class="screen-card">
+              <button class="secondary-btn" onclick="navigateTo('screen-settings-hub')">← Back to Settings</button>
+              <div class="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Access Control</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">User Roles & Invitations</h2>
+                </div>
+              </div>
+              <form id="invite-user-form" class="mt-8 grid gap-5 md:grid-cols-[1fr_220px_auto]">
+                <div><label class="form-label">Email</label><input class="form-input" name="email" type="email" placeholder="team.member@company.com" required /></div>
+                <div><label class="form-label">Role</label><select class="form-input" name="role"><option>Admin</option><option>Accountant</option><option>Viewer</option></select></div>
+                <div class="flex items-end"><button class="primary-btn w-full" type="submit">Invite User</button></div>
+              </form>
+              <div id="user-roles-list" class="mt-8 grid gap-4"></div>
+            </div>
+          </section>
+
+          <section id="screen-billing" class="app-screen hidden space-y-6">
+            <div class="screen-card">
+              <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <span class="pill">Subscription</span>
+                  <h2 class="mt-3 text-3xl font-semibold tracking-tight">Billing & plans</h2>
+                  <p class="mt-2 text-slate-500">Upgrade or downgrade between Free, Pro, and Enterprise tiers.</p>
+                </div>
+                <div class="rounded-2xl bg-brand-50 px-4 py-3 text-sm font-medium text-brand-700">Current plan: <span id="current-plan-label">Pro</span></div>
+              </div>
+              <div id="billing-plans" class="mt-8 grid gap-6 lg:grid-cols-3"></div>
+            </div>
+          </section>
+
+          <section id="screen-activation" class="app-screen hidden">
+            <div class="screen-card max-w-3xl">
+              <div>
+                <span class="pill">License Activation</span>
+                <h2 class="mt-3 text-3xl font-semibold tracking-tight">Unlock Pro features offline</h2>
+                <p class="mt-2 text-slate-500">Enter a 16-character alphanumeric license key. Hyphens are optional and will be normalized automatically.</p>
+              </div>
+              <form id="activation-form" class="mt-8 space-y-5">
+                <div>
+                  <label class="form-label">License Key</label>
+                  <input id="activation-input" class="form-input font-mono uppercase tracking-[0.35em]" name="licenseKey" type="text" maxlength="19" placeholder="ABCD-EFGH-IJKL-MNOP" required />
+                </div>
+                <div class="flex flex-wrap gap-3">
+                  <button class="primary-btn" type="submit">Validate & Activate</button>
+                  <button class="secondary-btn" type="button" onclick="openModal('modal-activation')">Open Activation Modal</button>
+                </div>
+                <div id="activation-result" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">No key validated yet.</div>
+              </form>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <nav class="mobile-nav lg:hidden">
+      <button class="mobile-nav-link active" data-screen="screen-dashboard" onclick="navigateTo('screen-dashboard')">Home</button>
+      <button class="mobile-nav-link" data-screen="screen-invoices" onclick="navigateTo('screen-invoices')">Invoices</button>
+      <button class="mobile-nav-link" data-screen="screen-expenses" onclick="navigateTo('screen-expenses')">Expenses</button>
+      <button class="mobile-nav-link" data-screen="screen-payroll" onclick="navigateTo('screen-payroll')">Payroll</button>
+      <button class="mobile-nav-link" data-screen="screen-settings-hub" onclick="navigateTo('screen-settings-hub')">Settings</button>
+    </nav>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <div id="modal-invoice" class="modal hidden">
+      <div class="modal-panel">
+        <div class="flex items-center justify-between"><h3 class="text-xl font-semibold">Create Invoice</h3><button class="text-slate-500" onclick="closeModal('modal-invoice')">✕</button></div>
+        <form id="invoice-form" class="mt-6 space-y-4">
+          <div><label class="form-label">Client Name</label><input class="form-input" name="client" type="text" required /></div>
+          <div class="grid gap-4 md:grid-cols-2"><div><label class="form-label">Amount</label><input class="form-input" name="amount" type="number" min="0" step="0.01" required /></div><div><label class="form-label">Due Date</label><input class="form-input" name="dueDate" type="date" required /></div></div>
+          <button class="primary-btn w-full" type="submit">Save Invoice</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="modal-expense" class="modal hidden">
+      <div class="modal-panel">
+        <div class="flex items-center justify-between"><h3 class="text-xl font-semibold">Record Expense</h3><button class="text-slate-500" onclick="closeModal('modal-expense')">✕</button></div>
+        <form id="expense-form" class="mt-6 space-y-4">
+          <div><label class="form-label">Vendor</label><input class="form-input" name="vendor" type="text" required /></div>
+          <div><label class="form-label">Category</label><input class="form-input" name="category" type="text" required /></div>
+          <div class="grid gap-4 md:grid-cols-2"><div><label class="form-label">Amount</label><input class="form-input" name="amount" type="number" min="0" step="0.01" required /></div><div><label class="form-label">Expense Date</label><input class="form-input" name="date" type="date" required /></div></div>
+          <button class="primary-btn w-full" type="submit">Save Expense</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="modal-account" class="modal hidden">
+      <div class="modal-panel">
+        <div class="flex items-center justify-between"><h3 class="text-xl font-semibold">Add Account</h3><button class="text-slate-500" onclick="closeModal('modal-account')">✕</button></div>
+        <form id="account-form" class="mt-6 space-y-4">
+          <div><label class="form-label">Account Name</label><input class="form-input" name="name" type="text" required /></div>
+          <div class="grid gap-4 md:grid-cols-2"><div><label class="form-label">Type</label><select class="form-input" name="type"><option>Asset</option><option>Liability</option><option>Equity</option><option>Revenue</option><option>Expense</option></select></div><div><label class="form-label">Balance</label><input class="form-input" name="balance" type="number" min="0" step="0.01" required /></div></div>
+          <button class="primary-btn w-full" type="submit">Create Account</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="modal-activation" class="modal hidden">
+      <div class="modal-panel">
+        <div class="flex items-center justify-between"><h3 class="text-xl font-semibold">Activate LedgerFlow Pro</h3><button class="text-slate-500" onclick="closeModal('modal-activation')">✕</button></div>
+        <p class="mt-2 text-sm text-slate-500">Validate a 16-character code locally even if Supabase is unavailable.</p>
+        <form id="activation-modal-form" class="mt-6 space-y-4">
+          <div><label class="form-label">Activation Code</label><input class="form-input font-mono uppercase tracking-[0.25em]" name="licenseKey" type="text" maxlength="19" placeholder="AAAA-BBBB-CCCC-DDDD" required /></div>
+          <button class="primary-btn w-full" type="submit">Activate</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
